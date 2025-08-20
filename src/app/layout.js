@@ -2,7 +2,7 @@ import "./globals.css";
 
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import Plus from "@/components/Plus";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export const metadata = {
   title: "Anupama Nepal",
@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
       <body>
         <Navbar />
         {children}
-        <Plus />
+        <ScrollToTop />
         <Footer />
       </body>
     </html>
