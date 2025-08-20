@@ -50,7 +50,7 @@ const Navbar = () => {
                     href={item.path}
                     className={`pt-2 transition-all ease-in duration-300 ${
                       isActive
-                        ? "border-t-2 border-[#5e7e50] text-primary-light"
+                        ? "border-t-2 border-[#638256] text-primary-light"
                         : "hover:border-t-2 hover:border-[#5c6e55] hover:text-[#283f1d]"
                     }`}
                     onClick={() => setIsOpen(false)}
