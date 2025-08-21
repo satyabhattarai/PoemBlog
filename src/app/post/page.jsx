@@ -1,8 +1,34 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
+
+import axios from "axios";
 
 const page = () => {
+  const [title, setTitle] = useState("");
+  const [subtitle, setSubtitle] = useState("");
+  const [content, setContent] = useState("");
+  const [meaning, setMeaning] = useState("");
+  const [image, setImage] = useState("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("/api/protected/posts", {
+        title,
+        subtitle,
+        content,
+        image: "",
+        meaning,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
-    <form className="bg-white rounded-2xl shadow-sm border p-6 space-y-6">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white rounded-2xl shadow-sm border p-6 space-y-6"
+    >
       {/* Title & Subtitle */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col gap-2">
@@ -12,6 +38,8 @@ const page = () => {
           <input
             id="title"
             type="text"
+            onChange={(e) => setTitle(e.target.value)}
+            value={title}
             placeholder="e.g., Whisper of the Hills"
             className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none"
           />
@@ -23,24 +51,13 @@ const page = () => {
           <input
             id="subtitle"
             type="text"
+            value={subtitle}
+            onChange={(e) => setSubtitle(e.target.value)}
             placeholder="Optional subtitle"
             className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none"
           />
         </div>
       </div>
-
-      {/* Date */}
-      <div className="flex flex-col gap-2">
-        <label htmlFor="date" className="text-sm font-medium">
-          Date
-        </label>
-        <input
-          id="date"
-          type="date"
-          className="w-full md:w-1/2 rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none"
-        />
-      </div>
-
       {/* Poem */}
       <div className="flex flex-col gap-2">
         <label htmlFor="poem" className="text-sm font-medium">
@@ -48,6 +65,8 @@ const page = () => {
         </label>
         <textarea
           id="poem"
+          onChange={(e) => setContent(e.target.value)}
+          value={content}
           placeholder={`Write your poem here...\nUse blank lines to separate stanzas.`}
           rows={8}
           className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none"
@@ -77,6 +96,8 @@ const page = () => {
         </label>
         <textarea
           id="meaning"
+          onChange={(e) => setMeaning(e.target.value)}
+          value={meaning}
           placeholder={`Write meanings per stanza here...\nExample:\n1) ...\n2) ...`}
           rows={6}
           className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none"

@@ -69,7 +69,7 @@ const Navbar = () => {
             {user && (
               <>
                 <li>
-                  <a href="/profile">Profile</a>
+                  <a href="/post">Post</a>
                 </li>
                 <li>
                   <a href="/auth/logout">Logout</a>

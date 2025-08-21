@@ -2,17 +2,15 @@
 
 import { useEffect, useState } from "react";
 
-import fetchDataFromSheet from "@/api/fetchDataFromSheet";
+import axios from "axios";
 
 const HighlightedPoem = () => {
   const [data, setData] = useState([]);
   const [current, setCurrent] = useState(0);
 
   const fetch_data = async () => {
-    const sheetName = "Poems";
-    const limit = 4;
-    const response = await fetchDataFromSheet(sheetName, limit);
-    setData(response);
+    const response = await axios.get("/api/posts");
+    setData(response.data);
   };
 
   useEffect(() => {
@@ -56,18 +54,20 @@ const HighlightedPoem = () => {
         >
           {data.map((item, index) => (
             <div key={index} className="min-w-full px-16 flex flex-col gap-8 ">
-              <iframe
-                src={item.image}
-                className="w-full min-h-80 sm:min-h-96 md:min-h-124 lg:min-h-136"
-                allow="autoplay"
-              ></iframe>
+              {item.image && (
+                <img
+                  src={item.image}
+                  className="w-full min-h-80 sm:min-h-96 md:min-h-124 lg:min-h-136"
+                  allow="autoplay"
+                ></img>
+              )}
 
               <div className="flex flex-col justify-start w-full gap-1">
                 <span className="bg-[#FFCB81] text-[#954600] w-fit px-5">
                   {item.title}
                 </span>
                 <p className="text-secondary-dark text-justify text-sm sm:text-base">
-                  {item.sub_title}
+                  {item.subtitle}
                 </p>
               </div>
             </div>

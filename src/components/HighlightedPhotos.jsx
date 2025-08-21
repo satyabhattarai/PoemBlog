@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import fetchDataFromSheet from "@/api/fetchDataFromSheet";
+import fetchDataFromSheet from "@/app/api/fetchDataFromSheet";
 
 const HighlightedPhotos = () => {
   const [data, setData] = useState();
