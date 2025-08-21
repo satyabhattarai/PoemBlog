@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <Navbar />
-        {children}
+        <main className="flex-1">{children}</main>
         <ScrollToTop />
         <Footer />
       </body>

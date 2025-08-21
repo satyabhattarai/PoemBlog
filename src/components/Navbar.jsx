@@ -3,22 +3,23 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-
+import { useUser } from "@auth0/nextjs-auth0";
 const Navbar = () => {
+  const { user } = useUser();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
     { name: "Me", path: "/" },
-    { name: "My Poems", path: "/my_poems" },
-    { name: "My Gallery", path: "/my_gallery" },
-    { name: "About Me", path: "/about" },
-    { name: "Contact Me", path: "/contact" },
+    { name: "My Poems", path: "/mypoem" },
+    { name: "My Gallery", path: "/mygallery" },
+    { name: "About Me", path: "/aboutme" },
+    { name: "Contact Me", path: "/contactme" },
   ];
 
   return (
     <div>
-      <nav className="bg-secondary w-full shadow-2xl z-50 fixed">
+      <nav className="bg-secondary w-full shadow-2xl">
         <div className="mx-auto container bg-transparent flex justify-between items-center py-5 px-4">
           <Link
             href={"/"}
@@ -60,11 +61,24 @@ const Navbar = () => {
                 </li>
               );
             })}
+            {!user && (
+              <li>
+                <a href="/auth/login">Login</a>
+              </li>
+            )}
+            {user && (
+              <>
+                <li>
+                  <a href="/profile">Profile</a>
+                </li>
+                <li>
+                  <a href="/auth/logout">Logout</a>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </nav>
-
-      <div className="w-full py-6">dummy</div>
     </div>
   );
 };

@@ -1,6 +1,9 @@
 "use client";
 
+import { Router, useRouter } from "next/navigation";
+
 const HomeBanner = () => {
+  const router = useRouter();
   return (
     <section className="bg-secondary pt-26">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 h-full justify-between items-center gap-10 md:gap-16">
@@ -9,9 +12,13 @@ const HomeBanner = () => {
             <span>I love writing poems</span>
             <span>in my freetime.</span>
           </div>
-          <button className="btn-primary mx-auto md:mx-0">Read More</button>
+          <button
+            onClick={() => router.push("/mypoem")}
+            className="btn-primary mx-auto md:mx-0"
+          >
+            Read More
+          </button>
         </div>
-
         <div className="w-full h-full relative">
           <img
             src="/leaf.png"
