@@ -19,11 +19,11 @@ const Navbar = () => {
 
   return (
     <div>
-      <nav className="bg-secondary w-full shadow-2xl">
-        <div className="mx-auto container bg-transparent flex justify-between items-center py-5 px-4">
+      <nav className="bg-secondary w-full shadow-2xl px-8">
+        <div className="w-[1080px] mx-auto bg-transparent flex justify-between items-center py-5 px-4">
           <Link
             href={"/"}
-            className="cursor-pointer text-3xl sm:text-4xl px-4 py-2 mr-auto text-primary-light font-bold font-sans uppercase tracking-widest border-2 shadow-lg active:translate-y-0.5 transition-all duration-450 hover:shadow-2xl hover:-translate-y-2"
+            className="cursor-pointer text-3xl  mr-auto text-primary-light font-semibold font-sans uppercase tracking-wider  active:translate-y-0.5 transition-all duration-450 hover:-translate-y-1"
           >
             Anupama
           </Link>

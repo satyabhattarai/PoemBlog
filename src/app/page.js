@@ -9,7 +9,7 @@ export default function Home() {
       <HomeBanner />
       <HighlightedPoem />
       <RecentPoem />
-      <HighlightedPhotos />
+      {/* <HighlightedPhotos /> */}
       {/* <Test /> */}
     </main>
   );

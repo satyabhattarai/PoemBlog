@@ -12,7 +12,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className="">
         <Navbar />
         <main className="flex-1">{children}</main>
         <ScrollToTop />

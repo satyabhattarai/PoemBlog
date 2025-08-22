@@ -9,21 +9,41 @@ const page = () => {
   const [subtitle, setSubtitle] = useState("");
   const [content, setContent] = useState("");
   const [meaning, setMeaning] = useState("");
-  const [image, setImage] = useState("");
+  const [formData, setFormData] = useState("");
+  const handleImage = async (e) => {
+    e.preventDefault();
+    try {
+      const selectedFile = e.target.files[0];
+      const tempformData = new FormData();
+      tempformData.append("image", selectedFile);
+
+      setFormData(tempformData);
+      console.log(tempformData);
+    } catch (err) {}
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/protected/posts", {
-        title,
-        subtitle,
-        content,
-        image: "",
-        meaning,
+      const uploadResponse = await axios.post("/api/protected/posts/upload", {
+        formData,
       });
+      // if (uploadResponse.status === 200) {
+      //   const response = await axios.post("/api/protected/posts", {
+      //     title,
+      //     subtitle,
+      //     content,
+      //     image: uploadResponse.data.fileUrl,
+      //     meaning,
+      //   });
+      // }
+      console.log(uploadResponse);
     } catch (err) {
       console.log(err);
     }
   };
+  //right now i am only sending strings in text json format,
+  // now as i want image too, as file i cant do this
+  // and i need to pass it as formData
   return (
     <form
       onSubmit={handleSubmit}
@@ -84,6 +104,7 @@ const page = () => {
         <input
           id="image"
           type="file"
+          onChange={handleImage}
           accept="image/*"
           className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm file:mr-4 file:rounded-lg file:border-0 file:bg-gray-100 file:px-4 file:py-2 file:text-sm hover:file:bg-gray-200"
         />

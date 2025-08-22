@@ -12,37 +12,36 @@ const HighlightedPoem = () => {
     const response = await axios.get("/api/posts");
     setData(response.data);
   };
-
   useEffect(() => {
     fetch_data();
   }, []);
 
-  useEffect(() => {
-    if (data.length === 0) return;
+  // useEffect(() => {
+  //   if (data.length === 0) return;
 
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % data.length);
-    }, 7000);
+  //   const interval = setInterval(() => {
+  //     setCurrent((prev) => (prev + 1) % data.length);
+  //   }, 7000);
 
-    return () => clearInterval(interval);
-  }, [data]);
+  //   return () => clearInterval(interval);
+  // }, [data]);
 
-  const prevSlide = () => {
-    if (data.length === 0) return;
-    setCurrent((prev) => (prev === 0 ? data.length - 1 : prev - 1));
-  };
+  // const prevSlide = () => {
+  //   if (data.length === 0) return;
+  //   setCurrent((prev) => (prev === 0 ? data.length - 1 : prev - 1));
+  // };
 
-  const nextSlide = () => {
-    if (data.length === 0) return;
-    setCurrent((prev) => (prev + 1) % data.length);
-  };
+  // const nextSlide = () => {
+  //   if (data.length === 0) return;
+  //   setCurrent((prev) => (prev + 1) % data.length);
+  // };
 
   return (
-    <section className="container mx-auto py-16 w-full flex flex-col gap-12 px-4 sm:px-6 md:px-0">
-      <h1 className="text-primary-light text-2xl sm:text-3xl font-light flex gap-2 relative group cursor-pointer">
-        Highlighted
+    <section className="max-w-[1000px] mx-auto py-16 w-full flex flex-col gap-12 px-4 sm:px-6 md:px-0">
+      <h1 className=" text-primary-light text-3xl sm:text-4xl tracking-wider flex gap-2 relative group cursor-pointer">
+        Featured
         <span className="relative inline-block">
-          Poems
+          Poem
           <span className="absolute right-0 bottom-0 w-full h-[2px] bg-primary transform translate-y-1  transition-transform duration-300 group-hover:translate-y-2 "></span>
         </span>
       </h1>
@@ -61,7 +60,6 @@ const HighlightedPoem = () => {
                   allow="autoplay"
                 ></img>
               )}
-
               <div className="flex flex-col justify-start w-full gap-1">
                 <span className="bg-[#FFCB81] text-[#954600] w-fit px-5">
                   {item.title}
@@ -73,20 +71,18 @@ const HighlightedPoem = () => {
             </div>
           ))}
         </div>
-
-        <button
+        {/* <button
           onClick={prevSlide}
           className="absolute top-1/2 left-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70"
         >
           &#10094;
         </button>
-
         <button
           onClick={nextSlide}
           className="absolute top-1/2 right-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70"
         >
           &#10095;
-        </button>
+        </button> */}
       </div>
     </section>
   );
