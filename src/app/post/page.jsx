@@ -22,26 +22,19 @@ const page = () => {
       alert("Please select an image");
       return;
     }
-
     try {
-      // 1️⃣ Upload image to Cloudinary (unsigned)
       const formData = new FormData();
       formData.append("file", image);
-      formData.append(
-        "upload_preset",
-        process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
-      );
 
-      const cloudRes = await axios.post(
-        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+      const uploadRes = await axios.post(
+        "/api/protected/posts/upload",
         formData
       );
-
-      const imageUrl = cloudRes.data.secure_url;
+      const imageUrl = uploadRes.data.imageUrl;
       console.log("Cloudinary URL:", imageUrl);
 
-      // 2️⃣ Save post in backend (MongoDB)
-      const saveRes = await axios.post("/api/protected/posts/upload", {
+      //Save post in backend (MongoDB)
+      const saveRes = await axios.post("/api/protected/posts", {
         title,
         subtitle,
         content,
@@ -56,9 +49,6 @@ const page = () => {
     }
   };
 
-  // I was only sending strings in text json format,
-  // now as i want image too, as file i cant do this
-  // and i need to pass it as formData
   return (
     <form
       onSubmit={handleSubmit}
@@ -161,12 +151,3 @@ const page = () => {
 };
 
 export default page;
-// if (uploadResponse.status === 200) {
-//   const response = await axios.post("/api/protected/posts", {
-//     title,
-//     subtitle,
-//     content,
-//     image: uploadResponse.data.fileUrl,
-//     meaning,
-//   });
-// }
