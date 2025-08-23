@@ -9,39 +9,54 @@ const page = () => {
   const [subtitle, setSubtitle] = useState("");
   const [content, setContent] = useState("");
   const [meaning, setMeaning] = useState("");
-  const [formData, setFormData] = useState("");
-  const handleImage = async (e) => {
-    e.preventDefault();
-    try {
-      const selectedFile = e.target.files[0];
-      const tempformData = new FormData();
-      tempformData.append("image", selectedFile);
+  // const [formData, setFormData] = useState(""); instead of creating formdata as state
+  const [image, setImage] = useState(null);
 
-      setFormData(tempformData);
-      console.log(tempformData);
-    } catch (err) {}
+  //Here im saving files intempFORMDATA to send it to server via http.
+  const handleImage = async (e) => {
+    setImage(e.target.files[0]); // just keep File object in state
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!image) {
+      alert("Please select an image");
+      return;
+    }
+
     try {
-      const uploadResponse = await axios.post("/api/protected/posts/upload", {
-        formData,
+      // 1️⃣ Upload image to Cloudinary (unsigned)
+      const formData = new FormData();
+      formData.append("file", image);
+      formData.append(
+        "upload_preset",
+        process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+      );
+
+      const cloudRes = await axios.post(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        formData
+      );
+
+      const imageUrl = cloudRes.data.secure_url;
+      console.log("Cloudinary URL:", imageUrl);
+
+      // 2️⃣ Save post in backend (MongoDB)
+      const saveRes = await axios.post("/api/protected/posts/upload", {
+        title,
+        subtitle,
+        content,
+        meaning,
+        image: imageUrl,
       });
-      // if (uploadResponse.status === 200) {
-      //   const response = await axios.post("/api/protected/posts", {
-      //     title,
-      //     subtitle,
-      //     content,
-      //     image: uploadResponse.data.fileUrl,
-      //     meaning,
-      //   });
-      // }
-      console.log(uploadResponse);
+
+      console.log("Post saved in backend:", saveRes.data);
+      alert("Poem uploaded successfully!");
     } catch (err) {
-      console.log(err);
+      console.error("Upload error:", err.response?.data || err.message);
     }
   };
-  //right now i am only sending strings in text json format,
+
+  // I was only sending strings in text json format,
   // now as i want image too, as file i cant do this
   // and i need to pass it as formData
   return (
@@ -146,3 +161,12 @@ const page = () => {
 };
 
 export default page;
+// if (uploadResponse.status === 200) {
+//   const response = await axios.post("/api/protected/posts", {
+//     title,
+//     subtitle,
+//     content,
+//     image: uploadResponse.data.fileUrl,
+//     meaning,
+//   });
+// }
